@@ -66,9 +66,49 @@ const makeGuess = function (guess) {
         message.innerText = "You've already tried this letter!"; 
     } else {
         guessedLetters.push(guess);
-    
-    console.log(guessedLetters);
+        showLetters();
+        console.log(guessedLetters);
+        updateWIP(guessedLetters);
     }
     };
+
+    const showLetters = function () {
+        guessed.innerText = "";
+        for (let letter of guessedLetters) {
+            const li = document.createElement("li");
+            li.innerText = letter;
+            guessed.append(li);
+
+            
+        }
+
+    };
+
+    const updateWIP = function (guessedLetters) {
+        const wordUpper = word.toUpperCase();
+        const wordArray = wordUpper.split("");
+        const reveal = [];
+        for (const letter of wordArray) {
+            if (guessedLetters.includes(letter)) {
+                reveal.push(letter.toUpperCase());
+            } else {
+                reveal.push("●");
+            }
+
+            }
+            wordInProgress.innerText = reveal.join("");
+            playerWin();
+
+        };
+
+        const playerWin = function () {
+            if (word.toUpperCase() === wordInProgress.innerText) { 
+                message.classList.add("win");
+                message.innerHTML = `<p class="highlight">You guessed correct the word! Congrats!</p>`;
+            }
+        };
+    
+
+
 
 
